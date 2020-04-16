@@ -1,0 +1,79 @@
+from tkinter import *
+print("You have 20 coins.", "\n","1 coin = 1 spin", "\n", "Match 3 symbols in a row in order to win!", "\n", "[ 777 ] = 15x ","\n","[ Win ] = 2x","\n","[ BAR ] = 3x","\n","[ BANKRUPT ] = LOSE","\n","[ (8) ] = 8x","\n","[ $$$ ] = 18x")
+B = 20
+Bet = 0
+W = 0
+import random
+def respin():
+    global B
+    global Bet
+    user_input1 = input("Would you like to try another spin? Y or N?\n")
+    if user_input1 == "Y" or user_input1 == "y" or user_input1 == "":
+        print("How much would you like to bet?")
+        Bet = int(input("Bet amount: "))
+        if Bet > B:
+            print("Insufficient Fund.\n")
+            respin()
+        spin()
+    else:
+        print("Thank you for playing!")
+def spin():
+    global B
+    global W
+    global Bet
+    B = B - Bet
+    print("      | -", Bet," coin |  ")
+    value = random.randint(1, 6)
+    Sympol = ["[ 777 ]", "[ Win ]","[ BAR ]", "[ BANKRUPT ]", "[ (8) ]", "[ $$$ ]"]
+    copy = ["[ Win ]","[ BAR ]", "[ BANKRUPT ]", "[ (8) ]", "[ $$$ ]"]
+    Slot1 = random.choice(Sympol)
+    Slot2 = random.choice(Sympol)
+    Slot3 = random.choice(Sympol)
+    print("|",Slot1,Slot2,Slot3,"|","\n")
+
+    if B >= 1:
+        if Slot1 == Slot2 == Slot3 and  Sympol == ["[ $$$ ]"]:
+            W = Bet * 18
+            B = B + W
+            print ("    ====!!!YOU WIN!!!====\n","        +",  W, "COINS\n","     Balance:",  B,"coins","\n","   =====================")
+            respin()
+        if Slot1 == Slot2 == Slot3 and  Sympol == ["[ 777 ]"]:
+            W = Bet * 15
+            B = B + W
+            print ("    ====!!!YOU WIN!!!====\n","        +",  W, "COINS\n","     Balance:",  B,"coins","\n","   =====================")
+            respin()
+        if Slot1 == Slot2 == Slot3 and  Sympol == ["[ BAR ]"]:
+            W = Bet * 3
+            B = B + W
+            print ("    ====!!!YOU WIN!!!====\n","        +",  W, "COINS\n","     Balance:",  B,"coins","\n","   =====================")
+            respin()
+        if Slot1 == Slot2 == Slot3 and  Sympol == ["[ (8) ]"]:
+            W = Bet * 8
+            B = B + W
+            print ("    ====!!!YOU WIN!!!====\n","        +",  W, "COINS\n","     Balance:",  B,"coins","\n","   =====================")
+            respin()
+        if Slot1 == Slot2 == Slot3 and  Sympol == ["[ Win ]"]:
+            W = Bet * 2
+            B = B + W
+            print ("    ====!!!YOU WIN!!!====\n","        +",  W, "COINS\n","     Balance:",  B,"coins","\n","   =====================")
+            respin()
+        if Slot1 == Slot2 == Slot3 and Sympol == ["[ BANKRUPT ]"]:
+            print("   |||||You lost|||||\n", "  Balance: ", 0, " coins")
+            print(" YOU STRUCK OUT\n")
+        else:
+            print("     ___ You Lose ___\n", "    Balance:", B,"coins", "\n", "    ________________")
+            respin()
+
+    else:
+        print("   |||||You lost|||||\n", "  Balance: ",B," coins")
+        print("  Thank you for playing!\n")
+user_input = input("Would you like to spin? Y or N?\n")
+if user_input == "Y" or user_input == "y" or user_input == "":
+    print("How much would you like to bet?")
+    Bet = int(input("    Bet: "))
+    if Bet > B:
+        print("Insufficient Fund.\n")
+        respin()
+    spin()
+else:
+    print("   Thank you for playing!")
